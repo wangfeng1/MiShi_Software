@@ -91,8 +91,8 @@ namespace Config_Test
                                                                });
                 comboBox_column_1.Font = new Font("宋体", 11, FontStyle.Regular);
                 comboBox_column_1.DropDownStyle = ComboBoxStyle.DropDown;
-                table.Controls.Add(comboBox_column_1, 0, i);
-                comboBox_column_1.SelectionChangeCommitted += comboBox_column_1_SelectionChangeCommitted;
+                table.Controls.Add(comboBox_column_1, 0, i);                                        
+                
 
 
                 //控制盒编号
@@ -116,6 +116,7 @@ namespace Config_Test
                 comboBox_column_3.Font = new Font("宋体", 11, FontStyle.Regular);
                 comboBox_column_3.DropDownStyle = ComboBoxStyle.DropDown;
                 table.Controls.Add(comboBox_column_3, 2, i);
+                comboBox_column_3.SelectedIndexChanged += comboBox_column_3_SelectedIndexChanged;
 
                 //器件编号
                 ComboBox comboBox_column_4 = new ComboBox();
@@ -166,13 +167,45 @@ namespace Config_Test
                 MessageBox.Show(ex.Message.PadRight(30, ' '), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void comboBox_column_1_SelectionChangeCommitted(object sender, EventArgs e)
+        private void comboBox_column_3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            if (comboBox.SelectedIndex == 0)
+            int Current_Row_Num, Current_colum_Num;
+            ComboBox comboBox = sender as ComboBox;  
+            Current_Row_Num = table.Controls.IndexOf(comboBox)/5;//当前的combox 在Table中第几行
+            Current_colum_Num = table.Controls.IndexOf(comboBox)%5;
+
+           // MessageBox.Show("这是第" + Current_Row_Num.ToString() + "行" + Current_colum_Num.ToString() + "列" + comboBox.SelectedIndex.ToString()+ "个选项！！！");
+
+            if (comboBox.Text == "电灯" || comboBox.Text == "射灯" || comboBox.Text == "电磁门")
             {
-                MessageBox.Show("OK");
+                ComboBox match_combox = (ComboBox)table.Controls[Current_Row_Num * 5 + 4];
+                match_combox.Items.Clear();//清空
+                match_combox.Text = " ";
+                match_combox.TabIndex = 2;
+                match_combox.Items.AddRange(new object[] { "成功", "很成功" });
             }
+            else if (comboBox.Text == "播放器")
+            {
+
+
+            }
+            else if (comboBox.Text == "延时")
+            {
+
+            }
+            else if (comboBox.Text == "循环开始")
+            {
+
+            }
+            else if (comboBox.Text == "循环结束")
+            { 
+            
+            }
+
+            //if (comboBox.SelectedIndex == 0)
+            //{
+            //    MessageBox.Show("OK");
+            //}
 
         }
 
@@ -595,7 +628,7 @@ namespace Config_Test
     public class GlobalConstants  //全局变量都在这儿
     {
         public static List<data_struct> Xml_list = new List<data_struct>();
-
+       
 
         //private static List<data_struct> Xml_list
         //{
