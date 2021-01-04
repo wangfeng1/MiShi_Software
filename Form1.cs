@@ -92,7 +92,7 @@ namespace Config_Test
                 comboBox_column_1.Font = new Font("宋体", 11, FontStyle.Regular);
                 comboBox_column_1.DropDownStyle = ComboBoxStyle.DropDown;
                 table.Controls.Add(comboBox_column_1, 0, i);
-
+                comboBox_column_1.SelectionChangeCommitted += comboBox_column_1_SelectionChangeCommitted;
 
 
                 //控制盒编号
@@ -166,7 +166,15 @@ namespace Config_Test
                 MessageBox.Show(ex.Message.PadRight(30, ' '), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void comboBox_column_1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("OK");
+            }
 
+        }
 
         private void button13_Click(object sender, EventArgs e)
         {
