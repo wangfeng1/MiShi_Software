@@ -27,26 +27,25 @@ namespace Config_Test
 
         private List<data_struct> xml_list = new List<data_struct>();
 
-        private void Form2_Load()//object sender, EventArgs e
+        private void Form2_Load()
         {
 
             // 默认添加一行数据
             table.Dock = DockStyle.Top;     //顶部填充
             panel1.Controls.Add(table);
-            table.ColumnCount = 5;          //5列  设置1行为5列
-            table.Height = table.RowCount * 20; //1行table的整体高
-            table.Width = table.RowCount * 100;//1行table的整体宽
-            //table.AutoScroll = false;
-            //table.HorizontalScroll.Enabled = false;
-            //table.HorizontalScroll.Visible = false;
-            //table.HorizontalScroll.Maximum = 0;
-            //table.AutoScroll = true;
+            table.ColumnCount = 7;          //7列  设置1行为5列     
+            table.Height = table.RowCount * 30; //1行table的整体高
+            table.Width = table.RowCount * 80;//1行table的整体宽
 
-            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.2f));    //利用百分比计算，0.2f表示占用本行长度的20%
-            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.2f));
-            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.2f));
-            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.2f));
-            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.2f));
+            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.16f));    //利用百分比计算，0.2f表示占用本行长度的20%  
+            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.16f));
+            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.16f));
+            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.16f));
+            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.16f));
+            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.10f));
+            table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.10f));
+
+            MessageBox.Show(GlobalConstants.Xml_list.Count.ToString());
 
 
             for (int i = 0; i < GlobalConstants.Xml_list.Count; i++)  //显示
@@ -72,17 +71,17 @@ namespace Config_Test
             try
             {
                 // 动态添加一行
-                table.RowCount++;
+                table.RowCount++;//table里面有多少行
                 //设置高度,边框线也算高度，所以将40修改大一点
-                table.Height = table.RowCount * 100;
+                table.Height = table.RowCount * 30;
                 // 行高
-                //table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20));
+               table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30));
                 // 设置cell样式，增加线条
                 //table.CellBorderStyle = TableLayoutPanelCellBorderStyle.OutsetPartial;
 
                 int i = table.RowCount - 1;
 
-               //流程编号
+               //流程编号  第一列
                 ComboBox comboBox_column_1 = new ComboBox();
                 comboBox_column_1.Text = process_num;
                 comboBox_column_1.TabIndex = 20;
@@ -95,7 +94,7 @@ namespace Config_Test
                 
 
 
-                //控制盒编号
+                //控制盒编号 第二列
                 ComboBox comboBox_column_2 = new ComboBox();
                 comboBox_column_2.Text = ctrl_box_num;
                 comboBox_column_2.TabIndex = 20;
@@ -107,7 +106,7 @@ namespace Config_Test
                 table.Controls.Add(comboBox_column_2, 1, i);
 
 
-                //器件类型
+                //器件类型  第三列
                 ComboBox comboBox_column_3 = new ComboBox();
                 comboBox_column_3.Text = device_kind;
                 comboBox_column_3.TabIndex = 7;
@@ -118,7 +117,7 @@ namespace Config_Test
                 table.Controls.Add(comboBox_column_3, 2, i);
                 comboBox_column_3.SelectedIndexChanged += comboBox_column_3_SelectedIndexChanged;
 
-                //器件编号
+                //器件编号 第四列
                 ComboBox comboBox_column_4 = new ComboBox();
                 comboBox_column_4.Text = device_num;
                 comboBox_column_4.TabIndex = 20;
@@ -129,7 +128,7 @@ namespace Config_Test
                 comboBox_column_4.DropDownStyle = ComboBoxStyle.DropDown;
                 table.Controls.Add(comboBox_column_4, 3, i);
 
-                //器件动作
+                //器件动作  第五列
                 ComboBox comboBox_column_5 = new ComboBox();
                 comboBox_column_5.Text = device_action;
                 if (device_kind == "电灯" || device_kind == "射灯" || device_kind == "电磁门")
@@ -161,18 +160,156 @@ namespace Config_Test
                 comboBox_column_5.DropDownStyle = ComboBoxStyle.DropDown;
                 table.Controls.Add(comboBox_column_5, 4, i);
 
+                //添加按钮  第六列
+                Button Btn_add = new Button();
+                Btn_add.Text = "添加";
+                Btn_add.Font = new Font("宋体", 11, FontStyle.Regular);
+                table.Controls.Add(Btn_add, 5, i);
+                Btn_add.Click += Btn_Add_Click;
+
+                //删除按钮  第七列
+                Button Btn_delete = new Button();
+                Btn_delete.Text = "删除";
+                Btn_delete.Font = new Font("宋体", 11, FontStyle.Regular);
+                table.Controls.Add(Btn_delete, 6, i);
+                Btn_delete.Click += Btn_Delete_Click;
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.PadRight(30, ' '), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void Btn_Add_Click(object sender, EventArgs e)  //点击添加按钮
+        {
+            int Current_Row_Num, Current_colum_Num;
+            Button Btn_add = sender as Button;
+            Current_Row_Num = table.Controls.IndexOf(Btn_add) / 7;//当前的combox 在Table中第几行
+            Current_colum_Num = table.Controls.IndexOf(Btn_add) % 7;
+
+
+            // 动态添加一行
+            table.RowCount++;//table里面有多少行
+                             //设置高度,边框线也算高度，所以将40修改大一点
+            table.Height = table.RowCount * 30;
+            // 行高
+            table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30));
+            // 设置cell样式，增加线条
+            //table.CellBorderStyle = TableLayoutPanelCellBorderStyle.OutsetPartial;
+
+            int i = Current_Row_Num+1;
+
+            //流程编号  第一列
+            ComboBox comboBox_column_1 = new ComboBox();
+            string process_num = "000";
+            comboBox_column_1.Text = process_num;
+            comboBox_column_1.TabIndex = 20;
+            comboBox_column_1.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                                                                "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
+                                                               });
+            comboBox_column_1.Font = new Font("宋体", 11, FontStyle.Regular);
+            comboBox_column_1.DropDownStyle = ComboBoxStyle.DropDown;
+            table.Controls.Add(comboBox_column_1, 0, i);
+
+
+
+            //控制盒编号 第二列
+            ComboBox comboBox_column_2 = new ComboBox();
+            string ctrl_box_num = "000";
+            comboBox_column_2.Text = ctrl_box_num;
+            comboBox_column_2.TabIndex = 20;
+            comboBox_column_2.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                                                                "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
+                                                               });
+            comboBox_column_2.Font = new Font("宋体", 11, FontStyle.Regular);
+            comboBox_column_2.DropDownStyle = ComboBoxStyle.DropDown;
+            table.Controls.Add(comboBox_column_2, 1, i);
+
+
+            //器件类型  第三列
+            ComboBox comboBox_column_3 = new ComboBox();
+            string device_kind = "电灯";
+            comboBox_column_3.Text = device_kind;
+            comboBox_column_3.TabIndex = 7;
+            comboBox_column_3.Items.AddRange(new object[] { "电灯", "射灯", "播放器", "电磁门", "延时", "循环开始", "循环结束"
+                                                               });
+            comboBox_column_3.Font = new Font("宋体", 11, FontStyle.Regular);
+            comboBox_column_3.DropDownStyle = ComboBoxStyle.DropDown;
+            table.Controls.Add(comboBox_column_3, 2, i);
+            comboBox_column_3.SelectedIndexChanged += comboBox_column_3_SelectedIndexChanged;
+
+            //器件编号 第四列
+            ComboBox comboBox_column_4 = new ComboBox();
+            string device_num = "000";
+            comboBox_column_4.Text = device_num;
+            comboBox_column_4.TabIndex = 20;
+            comboBox_column_4.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                                                                "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
+                                                               });
+            comboBox_column_4.Font = new Font("宋体", 11, FontStyle.Regular);
+            comboBox_column_4.DropDownStyle = ComboBoxStyle.DropDown;
+            table.Controls.Add(comboBox_column_4, 3, i);
+
+            //器件动作  第五列
+            ComboBox comboBox_column_5 = new ComboBox();
+            string device_action = "电灯";
+            comboBox_column_5.Text = device_action;
+            if (device_kind == "电灯" || device_kind == "射灯" || device_kind == "电磁门")
+            {
+                comboBox_column_5.TabIndex = 2;
+                comboBox_column_5.Items.AddRange(new object[] { "开", "关" });
+            }
+            else if (device_kind == "播放器")
+            {
+                comboBox_column_5.TabIndex = 2;
+                comboBox_column_5.Items.AddRange(new object[] { "开始播放", "停止播放" });
+            }
+            else if (device_kind == "延时")
+            {
+                comboBox_column_5.TabIndex = 2;
+                comboBox_column_5.Items.AddRange(new object[] { "开始", "结束" });
+            }
+            else if (device_kind == "循环开始")
+            {
+                comboBox_column_5.TabIndex = 5;
+                comboBox_column_5.Items.AddRange(new object[] { "1次", "2次", "3次", "4次", "5次" });
+            }
+            else if (device_kind == "循环结束")
+            {
+                comboBox_column_5.TabIndex = 1;
+                comboBox_column_5.Items.AddRange(new object[] { "无" });
+            }
+            comboBox_column_5.Font = new Font("宋体", 11, FontStyle.Regular);
+            comboBox_column_5.DropDownStyle = ComboBoxStyle.DropDown;
+            table.Controls.Add(comboBox_column_5, 4, i);
+
+            //添加按钮  第六列
+            Button Btn_addd = new Button();
+            Btn_addd.Text = "添加";
+            Btn_addd.Font = new Font("宋体", 11, FontStyle.Regular);
+            table.Controls.Add(Btn_addd, 5, i);
+            Btn_addd.Click += Btn_Add_Click;
+
+            //删除按钮  第七列
+            Button Btn_delete = new Button();
+            Btn_delete.Text = "删除";
+            Btn_delete.Font = new Font("宋体", 11, FontStyle.Regular);
+            table.Controls.Add(Btn_delete, 6, i);
+            Btn_delete.Click += Btn_Delete_Click;
+
+        }
+        private void Btn_Delete_Click(object sender, EventArgs e)  //点击删除按钮
+        {
+
+
+
+        }
         private void comboBox_column_3_SelectedIndexChanged(object sender, EventArgs e)
         {
             int Current_Row_Num, Current_colum_Num;
             ComboBox comboBox = sender as ComboBox;  
-            Current_Row_Num = table.Controls.IndexOf(comboBox)/5;//当前的combox 在Table中第几行
-            Current_colum_Num = table.Controls.IndexOf(comboBox)%5;
+            Current_Row_Num = table.Controls.IndexOf(comboBox)/7;//当前的combox 在Table中第几行
+            Current_colum_Num = table.Controls.IndexOf(comboBox)%7;
 
            // MessageBox.Show("这是第" + Current_Row_Num.ToString() + "行" + Current_colum_Num.ToString() + "列" + comboBox.SelectedIndex.ToString()+ "个选项！！！");
 
@@ -209,144 +346,22 @@ namespace Config_Test
 
         }
 
-        private void button13_Click(object sender, EventArgs e)
-        {
-            ////添加引用，创建实例
-            //XmlRW myXml = new XmlRW();
-            //myXml.WriteXML("F:/work_2020/MISHI_升级/Config_Test/test.xml","步骤1","test1_1","test1_2","test1_3");
-        }
 
-        private void button14_Click(object sender, EventArgs e)
-        {
-            ////添加引用，创建实例
-            //XmlRW myXml = new XmlRW();
-            //myXml.WriteXML(FilePath, "步骤2","test2_1", "test2_2", "test2_3");
-        }
 
-        private void button15_Click(object sender, EventArgs e)
-        {
-            //1.创建一个XML文件
-            XmlTextWriter writer = new XmlTextWriter(FilePath, null);  
-            writer.WriteStartElement("测试");//写入根元素
-            writer.WriteEndElement(); //关闭根元素，并书写结束标签
-            writer.Close();  //将XML写入文件并且关闭XmlTextWriter
-        }
+
+
+
         public string localFilePath = "", fileNameExt = "", newFileName = "", FilePath = "";
 
-        private void comboBox3_TextChanged(object sender, EventArgs e) //第一行器件类型
-        {
-            string device_kind;
-            device_kind = comboBox3.SelectedItem.ToString();
-            //电灯        开  关
-            //射灯        开  关
-            //播放器      开始播放  停止播放
-            //电磁门      开 关
-            //延时        开始  结束
-            //循环开始    1次  2次  3次  4次   5次
-            //循环结束    无
-            if (device_kind == "电灯" || device_kind == "射灯" || device_kind == "电磁门")
-            {
-                comboBox5.TabIndex = 2;
-                this.comboBox5.Items.AddRange(new object[] {"开","关"} );
-            }
-            else if (device_kind == "播放器")
-            {
-                comboBox5.TabIndex = 2;
-                this.comboBox5.Items.AddRange(new object[] { "开始播放", "停止播放" });
-            }
-            else if (device_kind == "延时")
-            {
-                comboBox5.TabIndex = 2;
-                this.comboBox5.Items.AddRange(new object[] { "开始", "结束" });
-            }
-            else if (device_kind == "循环开始")
-            {
-                comboBox5.TabIndex = 5;
-                this.comboBox5.Items.AddRange(new object[] { "1次", "2次", "3次", "4次", "5次" });
-            }
-            else if (device_kind == "循环结束")
-            {
-                comboBox5.TabIndex = 1;
-                this.comboBox5.Items.AddRange(new object[] { "无" });
-            }
-        }
-        private void comboBox8_TextChanged_1(object sender, EventArgs e)
-        {
-            string device_kind;
-            device_kind = comboBox8.SelectedItem.ToString();
-            //电灯        开  关
-            //射灯        开  关
-            //播放器      开始播放  停止播放
-            //电磁门      开 关
-            //延时        开始  结束
-            //循环开始    1次  2次  3次  4次   5次
-            //循环结束    无
-            if (device_kind == "电灯" || device_kind == "射灯" || device_kind == "电磁门")
-            {
-                comboBox10.TabIndex = 2;
-                this.comboBox10.Items.AddRange(new object[] { "开", "关" });
-            }
-            else if (device_kind == "播放器")
-            {
-                comboBox10.TabIndex = 2;
-                this.comboBox10.Items.AddRange(new object[] { "开始播放", "停止播放" });
-            }
-            else if (device_kind == "延时")
-            {
-                comboBox10.TabIndex = 2;
-                this.comboBox10.Items.AddRange(new object[] { "开始", "结束" });
-            }
-            else if (device_kind == "循环开始")
-            {
-                comboBox10.TabIndex = 5;
-                this.comboBox10.Items.AddRange(new object[] { "1次", "2次", "3次", "4次", "5次" });
-            }
-            else if (device_kind == "循环结束")
-            {
-                comboBox10.TabIndex = 1;
-                this.comboBox10.Items.AddRange(new object[] { "无" });
-            }
-        }
-        private void comboBox13_TextChanged_1(object sender, EventArgs e)
-        {
-            string device_kind;
-            device_kind = comboBox13.SelectedItem.ToString();
-            //电灯        开  关
-            //射灯        开  关
-            //播放器      开始播放  停止播放
-            //电磁门      开 关
-            //延时        开始  结束
-            //循环开始    1次  2次  3次  4次   5次
-            //循环结束    无
-            if (device_kind == "电灯" || device_kind == "射灯" || device_kind == "电磁门")
-            {
-                comboBox15.TabIndex = 2;
-                this.comboBox15.Items.AddRange(new object[] { "开", "关" });
-            }
-            else if (device_kind == "播放器")
-            {
-                comboBox15.TabIndex = 2;
-                this.comboBox15.Items.AddRange(new object[] { "开始播放", "停止播放" });
-            }
-            else if (device_kind == "延时")
-            {
-                comboBox15.TabIndex = 2;
-                this.comboBox15.Items.AddRange(new object[] { "开始", "结束" });
-            }
-            else if (device_kind == "循环开始")
-            {
-                comboBox15.TabIndex = 5;
-                this.comboBox15.Items.AddRange(new object[] { "1次", "2次", "3次", "4次", "5次" });
-            }
-            else if (device_kind == "循环结束")
-            {
-                comboBox15.TabIndex = 1;
-                this.comboBox15.Items.AddRange(new object[] { "无" });
-            }
-        }
 
         public string file_read_path;
-        private void button4_Click(object sender, EventArgs e)  //读取文件
+
+        private void button3_Click(object sender, EventArgs e)  //写入按钮
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)  //读取文件按钮
         {
             OpenFileDialog file = new OpenFileDialog();
             file.ShowDialog();
@@ -355,122 +370,18 @@ namespace Config_Test
             file_read_path = localFilePath;
         }
 
-        private void button5_Click(object sender, EventArgs e)  //加载
+        private void button5_Click(object sender, EventArgs e)  //加载按钮
         {
             XmlRW myXml = new XmlRW();
-            myXml.ReadXML(file_read_path);//读取
-
-            
+            myXml.ReadXML(file_read_path);//读取   
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)  //测试按钮
         {
             Form2_Load();
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel1_MouseClick(object sender, MouseEventArgs e)
-        {
-            Console.Write("test");
-        }
-
-        private void panel1_Click(object sender, EventArgs e)
-        {
-            Console.Write("test");
-        }
-
-        private void comboBox18_TextChanged_1(object sender, EventArgs e)
-        {
-            string device_kind;
-            device_kind = comboBox18.SelectedItem.ToString();
-            //电灯        开  关
-            //射灯        开  关
-            //播放器      开始播放  停止播放
-            //电磁门      开 关
-            //延时        开始  结束
-            //循环开始    1次  2次  3次  4次   5次
-            //循环结束    无
-            if (device_kind == "电灯" || device_kind == "射灯" || device_kind == "电磁门")
-            {
-                comboBox20.TabIndex = 2;
-                this.comboBox20.Items.AddRange(new object[] { "开", "关" });
-            }
-            else if (device_kind == "播放器")
-            {
-                comboBox20.TabIndex = 2;
-                this.comboBox20.Items.AddRange(new object[] { "开始播放", "停止播放" });
-            }
-            else if (device_kind == "延时")
-            {
-                comboBox20.TabIndex = 2;
-                this.comboBox20.Items.AddRange(new object[] { "开始", "结束" });
-            }
-            else if (device_kind == "循环开始")
-            {
-                comboBox20.TabIndex = 5;
-                this.comboBox20.Items.AddRange(new object[] { "1次", "2次", "3次", "4次", "5次" });
-            }
-            else if (device_kind == "循环结束")
-            {
-                comboBox20.TabIndex = 1;
-                this.comboBox20.Items.AddRange(new object[] { "无" });
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)  //写入按钮
-        {
-            string  get_kind1_1num, get_kind1_2num, get_kind1_3num, get_kind1_4num, get_kind1_5num;
-            string get_kind2_1num, get_kind2_2num, get_kind2_3num, get_kind2_4num, get_kind2_5num;
-            string get_kind3_1num, get_kind3_2num, get_kind3_3num, get_kind3_4num, get_kind3_5num;
-            string get_kind4_1num, get_kind4_2num, get_kind4_3num, get_kind4_4num, get_kind4_5num;
-            string get_kind5_1num, get_kind5_2num, get_kind5_3num, get_kind5_4num, get_kind5_5num;
-            string get_kind6_1num, get_kind6_2num, get_kind6_3num, get_kind6_4num, get_kind6_5num;
-            string get_kind7_1num, get_kind7_2num, get_kind7_3num, get_kind7_4num, get_kind7_5num;
-            string get_kind8_1num, get_kind8_2num, get_kind8_3num, get_kind8_4num, get_kind8_5num;
-            string get_kind9_1num, get_kind9_2num, get_kind9_3num, get_kind9_4num, get_kind9_5num;
-            string get_kind10_1num, get_kind10_2num, get_kind10_3num, get_kind10_4num, get_kind10_5num;
-
-            XmlRW myXml = new XmlRW();
-
-            get_kind1_1num = comboBox1.SelectedItem.ToString();
-            get_kind1_2num = comboBox2.SelectedItem.ToString();
-            get_kind1_3num = comboBox3.SelectedItem.ToString();
-            get_kind1_4num = comboBox4.SelectedItem.ToString();
-            get_kind1_5num = comboBox5.SelectedItem.ToString();
-            myXml.WriteXML(FilePath, "步骤1", get_kind1_1num, get_kind1_2num, get_kind1_3num, get_kind1_4num, get_kind1_5num);
-
-            get_kind2_1num = comboBox6.SelectedItem.ToString();
-            get_kind2_2num = comboBox7.SelectedItem.ToString();
-            get_kind2_3num = comboBox8.SelectedItem.ToString();
-            get_kind2_4num = comboBox9.SelectedItem.ToString();
-            get_kind2_5num = comboBox10.SelectedItem.ToString();
-            myXml.WriteXML(FilePath, "步骤1", get_kind2_1num, get_kind2_2num, get_kind2_3num, get_kind2_4num, get_kind2_5num);
-
-            get_kind3_1num = comboBox11.SelectedItem.ToString();
-            get_kind3_2num = comboBox12.SelectedItem.ToString();
-            get_kind3_3num = comboBox13.SelectedItem.ToString();
-            get_kind3_4num = comboBox14.SelectedItem.ToString();
-            get_kind3_5num = comboBox15.SelectedItem.ToString();
-            myXml.WriteXML(FilePath, "步骤1", get_kind3_1num, get_kind3_2num, get_kind3_3num, get_kind3_4num, get_kind3_5num);
-
-            get_kind4_1num = comboBox16.SelectedItem.ToString();
-            get_kind4_2num = comboBox17.SelectedItem.ToString();
-            get_kind4_3num = comboBox18.SelectedItem.ToString();
-            get_kind4_4num = comboBox19.SelectedItem.ToString();
-            get_kind4_5num = comboBox20.SelectedItem.ToString();
-            myXml.WriteXML(FilePath, "步骤1", get_kind4_1num, get_kind4_2num, get_kind4_3num, get_kind4_4num, get_kind4_5num);
-
-
-        }
         private void button16_Click(object sender, EventArgs e)  //创建文件按钮
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -629,12 +540,6 @@ namespace Config_Test
     {
         public static List<data_struct> Xml_list = new List<data_struct>();
        
-
-        //private static List<data_struct> Xml_list
-        //{
-        //    get { return xml_list; }
-        //    set { xml_list = value; }
-        //}
     }
 
 }
