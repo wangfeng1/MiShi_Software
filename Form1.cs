@@ -35,7 +35,7 @@ namespace Config_Test
             panel1.Controls.Add(table);
             table.ColumnCount = 7;          //7列  设置1行为5列     
             table.Height = table.RowCount * 30; //1行table的整体高
-            table.Width = table.RowCount * 80;//1行table的整体宽
+            table.Width = table.ColumnCount * 80;//1行table的整体宽
 
             table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.16f));    //利用百分比计算，0.2f表示占用本行长度的20%  
             table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.16f));
@@ -45,7 +45,7 @@ namespace Config_Test
             table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.10f));
             table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, table.Width * 0.10f));
 
-            MessageBox.Show(GlobalConstants.Xml_list.Count.ToString());
+            //MessageBox.Show(GlobalConstants.Xml_list.Count.ToString());
 
 
             for (int i = 0; i < GlobalConstants.Xml_list.Count; i++)  //显示
@@ -184,20 +184,37 @@ namespace Config_Test
         {
             int Current_Row_Num, Current_colum_Num;
             Button Btn_add = sender as Button;
-            Current_Row_Num = table.Controls.IndexOf(Btn_add) / 7;//当前的combox 在Table中第几行
-            Current_colum_Num = table.Controls.IndexOf(Btn_add) % 7;
+            Current_Row_Num = table.Controls.IndexOf(Btn_add) / 7;//当前的combox 在Table中第几行  3
+            
 
-
-            // 动态添加一行
-            table.RowCount++;//table里面有多少行
-                             //设置高度,边框线也算高度，所以将40修改大一点
+            //1.table 里面先增加一行的位置
+            //
+            table.RowCount++;//table里面有多少行  7
             table.Height = table.RowCount * 30;
-            // 行高
             table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30));
-            // 设置cell样式，增加线条
-            //table.CellBorderStyle = TableLayoutPanelCellBorderStyle.OutsetPartial;
 
-            int i = Current_Row_Num+1;
+
+            //2.移动当前行下面的行 交换位置
+            for (int row_count = 0; row_count< table.RowCount- Current_Row_Num-2; row_count++)
+            { 
+                this.table.SetRow(table.GetControlFromPosition(0, row_count+ Current_Row_Num+1),  row_count + Current_Row_Num + 2);
+
+                this.table.SetRow(table.GetControlFromPosition(1, row_count + Current_Row_Num + 1), row_count + Current_Row_Num + 2);
+
+                this.table.SetRow(table.GetControlFromPosition(2, row_count + Current_Row_Num + 1), row_count + Current_Row_Num + 2);
+
+                this.table.SetRow(table.GetControlFromPosition(3, row_count + Current_Row_Num + 1), row_count + Current_Row_Num + 2);
+
+                this.table.SetRow(table.GetControlFromPosition(4, row_count + Current_Row_Num + 1), row_count + Current_Row_Num + 2);
+
+                this.table.SetRow(table.GetControlFromPosition(5, row_count + Current_Row_Num + 1), row_count + Current_Row_Num + 2);
+
+                this.table.SetRow(table.GetControlFromPosition(6, row_count + Current_Row_Num + 1), row_count + Current_Row_Num + 2);
+
+
+            }
+
+
 
             //流程编号  第一列
             ComboBox comboBox_column_1 = new ComboBox();
@@ -209,7 +226,7 @@ namespace Config_Test
                                                                });
             comboBox_column_1.Font = new Font("宋体", 11, FontStyle.Regular);
             comboBox_column_1.DropDownStyle = ComboBoxStyle.DropDown;
-            table.Controls.Add(comboBox_column_1, 0, i);
+            table.Controls.Add(comboBox_column_1, 0, Current_Row_Num+1);
 
 
 
@@ -223,7 +240,7 @@ namespace Config_Test
                                                                });
             comboBox_column_2.Font = new Font("宋体", 11, FontStyle.Regular);
             comboBox_column_2.DropDownStyle = ComboBoxStyle.DropDown;
-            table.Controls.Add(comboBox_column_2, 1, i);
+            table.Controls.Add(comboBox_column_2, 1, Current_Row_Num + 1);
 
 
             //器件类型  第三列
@@ -235,7 +252,7 @@ namespace Config_Test
                                                                });
             comboBox_column_3.Font = new Font("宋体", 11, FontStyle.Regular);
             comboBox_column_3.DropDownStyle = ComboBoxStyle.DropDown;
-            table.Controls.Add(comboBox_column_3, 2, i);
+            table.Controls.Add(comboBox_column_3, 2, Current_Row_Num + 1);
             comboBox_column_3.SelectedIndexChanged += comboBox_column_3_SelectedIndexChanged;
 
             //器件编号 第四列
@@ -248,7 +265,8 @@ namespace Config_Test
                                                                });
             comboBox_column_4.Font = new Font("宋体", 11, FontStyle.Regular);
             comboBox_column_4.DropDownStyle = ComboBoxStyle.DropDown;
-            table.Controls.Add(comboBox_column_4, 3, i);
+            table.Controls.Add(comboBox_column_4, 3, Current_Row_Num + 1);
+
 
             //器件动作  第五列
             ComboBox comboBox_column_5 = new ComboBox();
@@ -281,21 +299,37 @@ namespace Config_Test
             }
             comboBox_column_5.Font = new Font("宋体", 11, FontStyle.Regular);
             comboBox_column_5.DropDownStyle = ComboBoxStyle.DropDown;
-            table.Controls.Add(comboBox_column_5, 4, i);
+            table.Controls.Add(comboBox_column_5, 4, Current_Row_Num + 1);
+
 
             //添加按钮  第六列
             Button Btn_addd = new Button();
             Btn_addd.Text = "添加";
             Btn_addd.Font = new Font("宋体", 11, FontStyle.Regular);
-            table.Controls.Add(Btn_addd, 5, i);
+            table.Controls.Add(Btn_addd, 5, Current_Row_Num + 1);
+
             Btn_addd.Click += Btn_Add_Click;
 
             //删除按钮  第七列
             Button Btn_delete = new Button();
             Btn_delete.Text = "删除";
             Btn_delete.Font = new Font("宋体", 11, FontStyle.Regular);
-            table.Controls.Add(Btn_delete, 6, i);
+            table.Controls.Add(Btn_delete, 6, Current_Row_Num + 1);
             Btn_delete.Click += Btn_Delete_Click;
+
+
+            //更新移动过控件的index
+            for (int index_cnt = 0; index_cnt< table.RowCount - Current_Row_Num -1; index_cnt++)
+            {
+                table.Controls.SetChildIndex(table.GetControlFromPosition(0, Current_Row_Num + index_cnt + 1), (Current_Row_Num + index_cnt + 1) * 7 + 0);
+                table.Controls.SetChildIndex(table.GetControlFromPosition(1, Current_Row_Num + index_cnt + 1), (Current_Row_Num + index_cnt + 1) * 7 + 1);
+                table.Controls.SetChildIndex(table.GetControlFromPosition(2, Current_Row_Num + index_cnt + 1), (Current_Row_Num + index_cnt + 1) * 7 + 2);
+                table.Controls.SetChildIndex(table.GetControlFromPosition(3, Current_Row_Num + index_cnt + 1), (Current_Row_Num + index_cnt + 1) * 7 + 3);
+                table.Controls.SetChildIndex(table.GetControlFromPosition(4, Current_Row_Num + index_cnt + 1), (Current_Row_Num + index_cnt + 1) * 7 + 4);
+                table.Controls.SetChildIndex(table.GetControlFromPosition(5, Current_Row_Num + index_cnt + 1), (Current_Row_Num + index_cnt + 1) * 7 + 5);
+                table.Controls.SetChildIndex(table.GetControlFromPosition(6, Current_Row_Num + index_cnt + 1), (Current_Row_Num + index_cnt + 1) * 7 + 6);
+
+            }
 
         }
         private void Btn_Delete_Click(object sender, EventArgs e)  //点击删除按钮
@@ -315,7 +349,7 @@ namespace Config_Test
 
             if (comboBox.Text == "电灯" || comboBox.Text == "射灯" || comboBox.Text == "电磁门")
             {
-                ComboBox match_combox = (ComboBox)table.Controls[Current_Row_Num * 5 + 4];
+                ComboBox match_combox = (ComboBox)table.Controls[Current_Row_Num * 7 + 4];
                 match_combox.Items.Clear();//清空
                 match_combox.Text = " ";
                 match_combox.TabIndex = 2;
