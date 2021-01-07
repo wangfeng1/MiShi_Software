@@ -531,18 +531,23 @@ namespace Config_Test
         {
             XmlRW writer = new XmlRW();
 
-            writer.WriteXML(FilePath,"1", "1", "1", "1", "1", "1");
-            writer.WriteXML(FilePath, "1", "1", "1", "1", "1", "1");
-            //for (int i = 0;i< table.RowCount;i++)
-            //{
-            //    writer.WriteXML(FilePath, "1",
-            //                   table.Controls[i * 7 + 0].Text.ToString(),
-            //                   table.Controls[i * 7 + 1].Text.ToString(),
-            //                   table.Controls[i * 7 + 2].Text.ToString(),
-            //                   table.Controls[i * 7 + 3].Text.ToString(),
-            //                   table.Controls[i * 7 + 4].Text.ToString()
-            //                   );
-            //}
+
+            writer.WriteXML_init(FilePath);
+
+            for (int i = 0; i < table.RowCount; i++)
+            {
+                writer.WriteXML_write("版本1",
+                               table.Controls[i * 7 + 0].Text.ToString(),
+                               table.Controls[i * 7 + 1].Text.ToString(),
+                               table.Controls[i * 7 + 2].Text.ToString(),
+                               table.Controls[i * 7 + 3].Text.ToString(),
+                               table.Controls[i * 7 + 4].Text.ToString()
+                               );
+            }
+
+            writer.WriteXML_save(FilePath);
+
+            MessageBox.Show("写入完成！！！");
         }
 
     }
@@ -575,11 +580,60 @@ namespace Config_Test
         //kind4-器件编号
         //kind5-器件动作
 
+        XmlDocument myDoc = new XmlDocument();//初始化XML文档操作类
+
+        public void WriteXML_init(string FileName)
+        {
+            myDoc.Load(FileName); //加载XML文件       
+        }
+        public void WriteXML_write(string step, string kind1, string kind2, string kind3, string kind4, string kind5)
+        {
+            XmlNode newElem = myDoc.CreateNode("element", step, ""); //添加节点 User要对应我们xml文件中的节点名字
+
+            XmlElement ele1 = myDoc.CreateElement("流程编号");//添加属性名称
+            XmlText text1 = myDoc.CreateTextNode(kind1);//添加属性的值
+            newElem.AppendChild(ele1);            //在节点中添加元素
+            newElem.LastChild.AppendChild(text1);
+
+
+            XmlElement ele2 = myDoc.CreateElement("控制盒编号");//添加属性名称
+            XmlText text2 = myDoc.CreateTextNode(kind2);//添加属性的值
+            newElem.AppendChild(ele2);
+            newElem.LastChild.AppendChild(text2);
+
+
+            XmlElement ele3 = myDoc.CreateElement("器件类型");//添加属性名称
+            XmlText text3 = myDoc.CreateTextNode(kind3);//添加属性的值
+            newElem.AppendChild(ele3);
+            newElem.LastChild.AppendChild(text3);
+
+            XmlElement ele4 = myDoc.CreateElement("器件编号");//添加属性名称
+            XmlText text4 = myDoc.CreateTextNode(kind4);//添加属性的值
+            newElem.AppendChild(ele4);
+            newElem.LastChild.AppendChild(text4);
+
+            XmlElement ele5 = myDoc.CreateElement("器件动作");//添加属性名称
+            XmlText text5 = myDoc.CreateTextNode(kind5);//添加属性的值
+            newElem.AppendChild(ele5);
+            newElem.LastChild.AppendChild(text5);
+
+            //将节点添加到文档中
+            XmlElement root = myDoc.DocumentElement;
+            root.AppendChild(newElem);
+        }
+
+        public void WriteXML_save(string FileName)
+        {
+            //保存
+            myDoc.Save(FileName);
+        }
+
         public void WriteXML(string FileName, string step, string kind1, string kind2, string kind3, string kind4, string kind5)
         {
             //2.操作XML文件
             XmlDocument myDoc = new XmlDocument();//初始化XML文档操作类
             myDoc.Load(FileName); //加载XML文件
+
             XmlNode newElem = myDoc.CreateNode("element", step, ""); //添加节点 User要对应我们xml文件中的节点名字
 
            
@@ -613,6 +667,45 @@ namespace Config_Test
             //将节点添加到文档中
             XmlElement root = myDoc.DocumentElement;
             root.AppendChild(newElem);
+
+
+
+
+            XmlNode newElem1 = myDoc.CreateNode("element", step, ""); //添加节点 User要对应我们xml文件中的节点名字
+
+            XmlElement ele11 = myDoc.CreateElement("流程编号");//添加属性名称
+            XmlText text11 = myDoc.CreateTextNode(kind1);//添加属性的值
+            newElem1.AppendChild(ele11);            //在节点中添加元素
+            newElem1.LastChild.AppendChild(text11);
+
+
+            XmlElement ele12 = myDoc.CreateElement("控制盒编号");//添加属性名称
+            XmlText text12 = myDoc.CreateTextNode(kind2);//添加属性的值
+            newElem1.AppendChild(ele12);
+            newElem1.LastChild.AppendChild(text12);
+
+
+            XmlElement ele13 = myDoc.CreateElement("器件类型");//添加属性名称
+            XmlText text13 = myDoc.CreateTextNode(kind3);//添加属性的值
+            newElem1.AppendChild(ele13);
+            newElem1.LastChild.AppendChild(text13);
+
+            XmlElement ele14 = myDoc.CreateElement("器件编号");//添加属性名称
+            XmlText text14 = myDoc.CreateTextNode(kind4);//添加属性的值
+            newElem1.AppendChild(ele14);
+            newElem1.LastChild.AppendChild(text14);
+
+            XmlElement ele15 = myDoc.CreateElement("器件动作");//添加属性名称
+            XmlText text15 = myDoc.CreateTextNode(kind5);//添加属性的值
+            newElem1.AppendChild(ele15);
+            newElem1.LastChild.AppendChild(text15);
+
+            //将节点添加到文档中
+            XmlElement root1 = myDoc.DocumentElement;
+            root1.AppendChild(newElem1);
+
+
+
 
             //保存
             myDoc.Save(FileName);
