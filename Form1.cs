@@ -29,6 +29,11 @@ namespace Config_Test
 
         private void Form2_Load()
         {
+            //初始化panel1
+           // panel1.Controls.Clear();
+            table.Controls.Clear();
+            table.RowCount = 0;
+            table.ColumnCount = 0;
 
             // 默认添加一行数据
             table.Dock = DockStyle.Top;     //顶部填充
@@ -469,12 +474,14 @@ namespace Config_Test
         private void button5_Click(object sender, EventArgs e)  //加载按钮
         {
             XmlRW myXml = new XmlRW();
-            myXml.ReadXML(file_read_path);//读取   
+            myXml.ReadXML(file_read_path);//读取 
+            
+            Form2_Load();
         }
 
         private void button6_Click(object sender, EventArgs e)  //测试按钮
         {
-            Form2_Load();
+            
         }
 
 
@@ -713,6 +720,8 @@ namespace Config_Test
         public void ReadXML(string FileName) //返回读到了几组  及每组 的内容
         {
             string process_num, ctrl_box_num, device_kind, device_num, device_action;
+
+            GlobalConstants.Xml_list.Clear();
 
             XmlDocument doc = new XmlDocument();
             doc.Load(FileName);
