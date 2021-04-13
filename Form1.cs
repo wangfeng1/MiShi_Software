@@ -468,6 +468,8 @@ namespace Config_Test
             file.ShowDialog();
             //获得文件路径
             localFilePath = file.FileName.ToString();
+            label8.Font = new Font("宋体", 14, FontStyle.Regular);
+            label8.Text = localFilePath;
             file_read_path = localFilePath;
         }
 
@@ -517,6 +519,9 @@ namespace Config_Test
                 FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\"));
 
                 FilePath = FilePath + "\\" +fileNameExt;
+
+                label8.Font = new Font("宋体", 14, FontStyle.Regular);
+                label8.Text = FilePath;
                 //给文件名前加上时间
                 //newFileName = DateTime.Now.ToString("yyyyMMdd") + fileNameExt;
                 //在文件名里加字符

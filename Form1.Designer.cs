@@ -38,6 +38,9 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -87,9 +90,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(154, 536);
+            this.button3.Location = new System.Drawing.Point(58, 629);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(180, 46);
             this.button3.TabIndex = 57;
             this.button3.Text = "写入";
             this.button3.UseVisualStyleBackColor = true;
@@ -97,9 +100,9 @@
             // 
             // button16
             // 
-            this.button16.Location = new System.Drawing.Point(61, 536);
+            this.button16.Location = new System.Drawing.Point(58, 566);
             this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(75, 23);
+            this.button16.Size = new System.Drawing.Size(180, 46);
             this.button16.TabIndex = 70;
             this.button16.Text = "创建文件";
             this.button16.UseVisualStyleBackColor = true;
@@ -107,9 +110,9 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(61, 576);
+            this.button4.Location = new System.Drawing.Point(276, 566);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(180, 46);
             this.button4.TabIndex = 116;
             this.button4.Text = "读取文件";
             this.button4.UseVisualStyleBackColor = true;
@@ -117,9 +120,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(154, 576);
+            this.button5.Location = new System.Drawing.Point(276, 629);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.Size = new System.Drawing.Size(180, 46);
             this.button5.TabIndex = 117;
             this.button5.Text = "加载";
             this.button5.UseVisualStyleBackColor = true;
@@ -129,14 +132,45 @@
             // 
             this.panel1.Location = new System.Drawing.Point(61, 44);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(985, 417);
+            this.panel1.Size = new System.Drawing.Size(985, 473);
             this.panel1.TabIndex = 119;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(54, 535);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(142, 19);
+            this.label6.TabIndex = 120;
+            this.label6.Text = "当前操作文件：";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(196, 723);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(0, 12);
+            this.label7.TabIndex = 121;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Location = new System.Drawing.Point(180, 535);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(28, 19);
+            this.label8.TabIndex = 122;
+            this.label8.Text = "无";
             // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1062, 703);
+            this.ClientSize = new System.Drawing.Size(1062, 697);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -166,6 +200,9 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }
 
